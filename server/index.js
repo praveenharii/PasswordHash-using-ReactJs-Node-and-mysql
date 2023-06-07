@@ -11,7 +11,6 @@ app.use(cors())
 app.use(express.json());
 
 
-
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
@@ -26,18 +25,6 @@ db.connect(err => {
     }
     console.log("Mysql Connected")
 })
-
-
-// app.get('/createdb', (req,res) => {
-//     let sql = "CREATE DATABASE nodemysql";
-//     db.query(sql, (err) => {
-//         if(err){
-//             throw err;
-//         }
-//         res.send("Database Created");
-//     });
-// });
-
 
 
 app.post("/signup", async (req, res) => {
@@ -115,41 +102,6 @@ async function sendEmail(message) {
   }
 }
 
-// app.post("/forgotPassword", async (req, res) => {
-//   const { email } = req.body;
-
-//   try {
-//     const user = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-
-//     if (user.length === 0) {
-//       res.send("User not found");
-//     } else {
-//       // Generate temporary password
-//       const tempPassword = crypto.randomBytes(4).toString("hex");
-
-//       // Update user's password with the temporary password
-//       await db.query("UPDATE users SET password = ? WHERE email = ?", [
-//         tempPassword,
-//         email,
-//       ]);
-
-//       // Send temporary password to user's email
-//       const message = {
-//         to: email,
-//         from: "linux2156@gmail.com",
-//         subject: "Temporary Password",
-//         text: `Your temporary password is: ${tempPassword}`,
-//       };
-//       await sendEmail(message);
-
-//       res.send("New temporary password sent");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching user: ", error);
-//     res.send("Error fetching user");
-//   }
-// });
-
 app.post("/forgotPassword", async (req, res) => {
   const { email } =req.body;
 
@@ -184,8 +136,7 @@ app.post("/forgotPassword", async (req, res) => {
         `Error sending email to ${email}: ${error.message}`;
         throw err;
       }
-       
-           
+    
       }
     }
   );
